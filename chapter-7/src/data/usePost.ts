@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import type { DataPost, PostInfo } from "../type";
 
-export function usePost(id) {
-  const [post, setPost] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+export function usePost(id: string | undefined) {
+  const [post, setPost] = useState<PostInfo | null>(null);
+  const [error, setError] = useState<unknown>(null);
+  const [isLoading, setIsLoading] = useState<boolean | null>(true);
 
   // APIでpostsを取得する処理をuseEffectで実行します。
   useEffect(() => {
@@ -11,22 +12,25 @@ export function usePost(id) {
       setIsLoading(true);
       setError(null);
       try {
-        const res = await fetch(
+        const res: Response = await fetch(
           `https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${id}`
         );
-        const data = await res.json();
+        const data: DataPost = await res.json();
         setPost(data.post);
-      } catch (err) {
-        console.error("postを取得できません。:", err);
-        setError(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error("postを取得できません。:", err);
+          setError(err.message);
+        } else {
+          setError("予期せぬエラーが発生しました");
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     fetcher();
-    console.log(post, isLoading, error);
   }, [id]);
-
+  console.log(post, isLoading, error);
   return { post, isLoading, error };
 }

@@ -3,7 +3,7 @@ import { usePost } from "./data/usePost";
 import styles from "./Detail.module.css";
 
 export default function Detail() {
-  const { id: number } = useParams(); //URLのパラメータからid取得
+  const { id } = useParams<{ id: string }>(); //URLのパラメータからid取得,useParamsはオブジェクトを返却
 
   //idを元にpostを取得
   const { post, isLoading, error } = usePost(id);

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import styles from "./PostCard.module.css";
+import type { DataPost } from "./type";
 
-export default function PostCard({ post }) {
+export default function PostCard({ post }: DataPost) {
   return (
     <Link to={`/posts/${post.id}`}>
       <div className={styles.postCard}>
@@ -10,7 +11,7 @@ export default function PostCard({ post }) {
             {new Date(post.createdAt).toLocaleDateString("ja-JP")}
           </div>
           <div className={styles.postCategory}>
-            {post.categories.map((category, index) => (
+            {post.categories.map((category: string, index: number) => (
               <div key={index} className={styles.postTag}>
                 {category}
               </div>

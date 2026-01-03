@@ -1,9 +1,8 @@
 import PostCard from "./PostCard";
-import React from "react";
 import { usePosts } from "./data/usePosts";
 
 export default function PostCardList() {
-  const { posts, isLoading, error } = usePosts();
+  const { posts, isLoading } = usePosts();
 
   if (isLoading) {
     return <p>読み込み中....</p>;
