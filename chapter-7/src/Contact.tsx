@@ -1,20 +1,32 @@
 import { useState } from "react";
 import styles from "./Contact.module.css";
+export type DataContact = {
+  name: string;
+  mail: string;
+  content: string;
+};
+export type ErrCheck = {
+  name: boolean;
+  mail: boolean;
+  content: boolean;
+  nameMessage: boolean;
+  contentMessage: boolean;
+};
 
 export default function Contact() {
-  const [contactData, setContactData] = useState({
+  const [contactData, setContactData] = useState<DataContact>({
     name: "",
     mail: "",
     content: "",
   });
-  const [error, setError] = useState({
+  const [error, setError] = useState<ErrCheck>({
     name: false,
     mail: false,
     content: false,
     nameMessage: false,
     contentMessage: false,
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const handleClear = () => {
     setContactData({
       name: "",
@@ -29,17 +41,17 @@ export default function Contact() {
       contentMessage: false,
     });
   };
-  const handleNameChange = (e) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContactData({ ...contactData, name: e.target.value });
   };
-  const handleMailChange = (e) => {
+  const handleMailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContactData({ ...contactData, mail: e.target.value });
   };
-  const handleContentChange = (e) => {
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContactData({ ...contactData, content: e.target.value });
   };
-  const handleSubmit = async (e) => {
-    let hasError = false;
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    let hasError: boolean = false;
     e.preventDefault();
     if (contactData.name.length > 30) {
       setError((prev) => ({ ...prev, nameMessage: true }));
@@ -95,8 +107,9 @@ export default function Contact() {
       );
       alert("送信しました");
       handleClear();
-    } catch (e) {
+    } catch (err: unknown) {
       alert("失敗しました");
+      console.error("postを取得できません。:", err);
     } finally {
       setIsSubmitting(false);
     }
@@ -151,7 +164,7 @@ export default function Contact() {
             <div className={styles.wFull}>
               <textarea
                 id=""
-                rows="8"
+                rows={8}
                 value={contactData.content}
                 onChange={handleContentChange}
                 disabled={isSubmitting}
