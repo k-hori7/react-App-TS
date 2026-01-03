@@ -12,15 +12,3 @@ export type DataPost = {
 export type DataPosts = {
   posts: PostInfo[];
 };
-export type DataContact = {
-  name: string;
-  mail: string;
-  content: string;
-};
-export type ErrCheck = {
-  name: boolean;
-  mail: boolean;
-  content: boolean;
-  nameMessage: boolean;
-  contentMessage: boolean;
-};
