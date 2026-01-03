@@ -1,0 +1,41 @@
+.postCard {
+  border: 1px solid #ccc;
+  flex-direction: row;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+.postInfo {
+  justify-content: space-between;
+  display: flex;
+}
+.postDate {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.postCategory {
+  display: flex;
+}
+.postTag {
+  border: 1px solid #06c;
+  border-radius: 0.2rem;
+  color: #06c;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.postTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+.postContent.preview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* 2行で切る */
+  line-clamp: 2; /* 標準プロパティを追加 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

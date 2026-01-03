@@ -1,0 +1,13 @@
+header {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  justify-content: space-between;
+  padding: 24px;
+}
+a {
+  color: inherit; /* 親要素の文字色を引き継ぐ */
+  text-decoration: none;
+}

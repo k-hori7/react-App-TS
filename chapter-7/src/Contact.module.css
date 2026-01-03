@@ -1,0 +1,79 @@
+.contactWrapper {
+  max-width: 800px;
+  padding-bottom: 2.5rem;
+  padding-top: 2.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+div {
+  display: block;
+  unicode-bidi: isolate;
+}
+.contactTitle {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.contactItem {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.contactLabel {
+  width: 240px;
+}
+
+.wFull {
+  width: 100%;
+}
+
+.inputItem {
+  padding: 1rem;
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+  border-width: 1px;
+  border-radius: 0.5rem;
+}
+
+textarea {
+  resize: vertical;
+  height: 192px;
+}
+
+.contactButtonWrapper {
+  justify-content: center;
+  display: flex;
+  margin-top: 2.5rem;
+}
+
+.contactButton {
+  font-weight: 700;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.5rem;
+}
+.contactButtonSubmit {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  margin-right: 1rem;
+}
+.contactButtonClear {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+  border: none;
+}
+
+.error {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}

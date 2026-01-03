@@ -1,0 +1,45 @@
+.postInfo {
+  justify-content: space-between;
+  display: flex;
+}
+.postDate {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.postCategory {
+  display: flex;
+}
+.postTag {
+  border: 1px solid #06c;
+  border-radius: 0.2rem;
+  color: #06c;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.postTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+.detailPost {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.postContent {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.postImage {
+  height: auto;
+  max-width: 100%;
+}
+.detailContainer {
+  margin: 40px auto;
+  max-width: 800px;
+}
