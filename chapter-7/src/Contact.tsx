@@ -1,6 +1,17 @@
 import { useState } from "react";
 import styles from "./Contact.module.css";
-import type { DataContact, ErrCheck } from "./type";
+export type DataContact = {
+  name: string;
+  mail: string;
+  content: string;
+};
+export type ErrCheck = {
+  name: boolean;
+  mail: boolean;
+  content: boolean;
+  nameMessage: boolean;
+  contentMessage: boolean;
+};
 
 export default function Contact() {
   const [contactData, setContactData] = useState<DataContact>({
