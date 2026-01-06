@@ -17,7 +17,8 @@ export function usePosts() {
           "https://ctbujttv1g.microcms.io/api/v1/posts",
           {
             headers: {
-              "X-MICROCMS-API-KEY": "S3CD8fSuRw9tUvpRBAc6W0L7mJtlezuaQpDj",
+              "X-MICROCMS-API-KEY": process.env
+                .NEXT_PUBLIC_MICROCMS_API_KEY as string,
             },
           }
         );
@@ -37,6 +38,5 @@ export function usePosts() {
 
     fetcher();
   }, []);
-  console.log(posts);
   return { posts, isLoading, error };
 }

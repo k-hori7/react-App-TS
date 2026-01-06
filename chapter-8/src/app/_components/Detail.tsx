@@ -5,9 +5,9 @@ import Image from "next/image";
 
 export default function Detail() {
   const { id } = useParams<{ id: string }>();
-
+  // console.log(id);
   const { post, isLoading, error } = usePost(id);
-
+  console.log(post);
   if (isLoading) {
     return <p>読み込み中....</p>;
   }
@@ -16,16 +16,16 @@ export default function Detail() {
     console.log(error);
     return <p>記事が見つかりませんでした</p>;
   }
-  console.log(post.thumbnailUrl);
+  console.log(post.thumbnail.url);
   return (
     <div className="mx-auto my-10 max-w-[800px] px-4">
       <div className="flex flex-col p-4">
         <div className="mb-4">
           <Image
-            src={post.thumbnailUrl}
+            src={post.thumbnail.url}
             alt=""
-            width={157}
-            height={116}
+            width={post.thumbnail.width}
+            height={post.thumbnail.height}
             className="w-full h-auto"
           />
         </div>
@@ -36,12 +36,12 @@ export default function Detail() {
               {new Date(post.createdAt).toLocaleDateString("ja-JP")}
             </div>
             <div className="flex">
-              {post.categories.map((category, index) => (
+              {post.categories.map((categories, id) => (
                 <div
-                  key={index}
+                  key={id}
                   className="border border-blue-600 rounded text-blue-600 text-sm mr-2 px-2 py-0.5"
                 >
-                  {category}
+                  {categories.name}
                 </div>
               ))}
             </div>

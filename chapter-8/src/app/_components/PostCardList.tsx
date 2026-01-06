@@ -9,7 +9,7 @@ export default function PostCardList() {
   if (isLoading) {
     return <p>読み込み中....</p>;
   }
-
+  console.log(posts);
   return (
     <>
       {posts.map((post: MicroCmsPost) => (
