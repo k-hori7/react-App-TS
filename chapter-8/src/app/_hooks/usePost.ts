@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import type { DataPost, PostInfo } from "../type";
+import type { DataPost } from "../_types/type";
+import { MicroCmsPost } from "../_types/MicroCmsPost";
 
 export function usePost(id: string | undefined) {
-  const [post, setPost] = useState<PostInfo | null>(null);
+  const [post, setPost] = useState<MicroCmsPost | null>(null);
   const [error, setError] = useState<unknown>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
