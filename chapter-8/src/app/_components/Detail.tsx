@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import { usePost } from "../_data/usePost";
+import { usePost } from "../_hooks/usePost";
 import Image from "next/image";
 
 export default function Detail() {

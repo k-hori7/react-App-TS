@@ -1,7 +1,7 @@
 "use client";
 import { PostInfo } from "../type";
 import PostCard from "./PostCard";
-import { usePosts } from "../_data/usePosts";
+import { usePosts } from "../_hooks/usePosts";
 
 export default function PostCardList() {
   const { posts, isLoading } = usePosts();

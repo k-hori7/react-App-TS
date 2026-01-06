@@ -4,7 +4,7 @@ import type { DataPost, PostInfo } from "../type";
 export function usePost(id: string | undefined) {
   const [post, setPost] = useState<PostInfo | null>(null);
   const [error, setError] = useState<unknown>(null);
-  const [isLoading, setIsLoading] = useState<boolean | null>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // APIでpostsを取得する処理をuseEffectで実行します。
   useEffect(() => {
