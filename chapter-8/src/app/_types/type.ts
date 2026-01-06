@@ -12,5 +12,5 @@ export type DataPost = {
   post: MicroCmsPost;
 };
 export type DataPosts = {
-  posts: MicroCmsPost[];
+  contents: MicroCmsPost[];
 };
