@@ -1,7 +1,7 @@
 "use client";
-import { PostInfo } from "../type";
 import PostCard from "./PostCard";
 import { usePosts } from "../_hooks/usePosts";
+import { MicroCmsPost } from "../_types/MicroCmsPost";
 
 export default function PostCardList() {
   const { posts, isLoading } = usePosts();
@@ -9,10 +9,10 @@ export default function PostCardList() {
   if (isLoading) {
     return <p>読み込み中....</p>;
   }
-
+  console.log(posts);
   return (
     <>
-      {posts.map((post: PostInfo) => (
+      {posts.map((post: MicroCmsPost) => (
         <PostCard post={post} key={post.id} />
       ))}
     </>
