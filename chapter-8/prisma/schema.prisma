@@ -10,6 +10,8 @@ generator client {
 datasource db {
   provider = "sqlite"
 }
+
+//自動でテーブル名はキャメルケース（小文字）になる Post -> prisma.post
 model Post {
   id             Int            @id @default(autoincrement())
   title          String
