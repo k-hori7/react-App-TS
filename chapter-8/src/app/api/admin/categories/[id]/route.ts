@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 //GET
 
-// カテゴリー詳細APIのレスポンスの型
 export type CategoryShowResponse = {
   category: {
     id: number;
@@ -45,7 +44,6 @@ export const GET = async (
 
 //PUT
 
-// カテゴリーの更新時に送られてくるリクエストのbodyの型
 export type UpdateCategoryRequestBody = {
   name: string;
 };
@@ -54,10 +52,7 @@ export const PUT = async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> } // ここでリクエストパラメータを受け取る
 ) => {
-  // paramsの中にidが入っているので、それを取り出す
   const { id } = await params;
-
-  // リクエストのbodyを取得
   const { name }: UpdateCategoryRequestBody = await request.json();
 
   try {
@@ -71,7 +66,6 @@ export const PUT = async (
       },
     });
 
-    // レスポンスを返す
     return NextResponse.json({ message: "OK" }, { status: 200 });
   } catch (error) {
     if (error instanceof Error)
@@ -83,9 +77,8 @@ export const PUT = async (
 
 export const DELETE = async (
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> } // ここでリクエストパラメータを受け取る
+  { params }: { params: Promise<{ id: string }> }
 ) => {
-  // paramsの中にidが入っているので、それを取り出す
   const { id } = await params;
 
   try {
@@ -96,7 +89,6 @@ export const DELETE = async (
       },
     });
 
-    // レスポンスを返す
     return NextResponse.json({ message: "OK" }, { status: 200 });
   } catch (error) {
     if (error instanceof Error)

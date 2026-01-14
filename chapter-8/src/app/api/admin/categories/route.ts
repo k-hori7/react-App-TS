@@ -1,9 +1,7 @@
 import { prisma } from "@/app/_libs/prisma";
 import { NextResponse } from "next/server";
 
-//管理者_カテゴリー一覧取得API
-
-// カテゴリー一覧APIのレスポンスの型
+//GET
 export type CategoriesIndexResponse = {
   categories: {
     id: number;
@@ -15,14 +13,11 @@ export type CategoriesIndexResponse = {
 
 export const GET = async () => {
   try {
-    // カテゴリーの一覧をDBから取得
     const categories = await prisma.category.findMany({
       orderBy: {
-        createdAt: "desc", // 作成日時の降順で取得
+        createdAt: "desc",
       },
     });
-
-    // レスポンスを返す
     return NextResponse.json<CategoriesIndexResponse>(
       { categories },
       { status: 200 }
@@ -33,26 +28,20 @@ export const GET = async () => {
   }
 };
 
-//管理者カテゴリー新規作成API
-
-// カテゴリーの作成時に送られてくるリクエストのbodyの型
+//POST
 export type CreateCategoryRequestBody = {
   name: string;
 };
 
-// カテゴリー作成APIのレスポンスの型
 export type CreateCategoryResponse = {
   id: number;
 };
 
 export const POST = async (request: Request) => {
   try {
-    // リクエストのbodyを取得
     const body = await request.json();
-
     // bodyの中からnameを取り出す
     const { name }: CreateCategoryRequestBody = body;
-
     // カテゴリーをDBに生成
     const data = await prisma.category.create({
       data: {
@@ -60,7 +49,6 @@ export const POST = async (request: Request) => {
       },
     });
 
-    // レスポンスを返す
     return NextResponse.json<CreateCategoryResponse>({
       id: data.id,
     });
