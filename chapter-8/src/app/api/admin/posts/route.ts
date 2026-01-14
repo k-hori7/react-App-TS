@@ -1,7 +1,7 @@
 import { prisma } from "@/app/_libs/prisma";
 import { NextResponse } from "next/server";
 
-//管理者_記事一覧取得API
+//GET
 
 export type PostIndexResponse = {
   posts: {

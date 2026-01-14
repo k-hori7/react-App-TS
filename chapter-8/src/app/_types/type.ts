@@ -1,8 +1,8 @@
-import { MicroCmsPost } from "./MicroCmsPost";
+import { NextApiPost } from "./typePost";
 
 export type DataPost = {
-  post: MicroCmsPost;
+  post: NextApiPost;
 };
 export type DataPosts = {
-  contents: MicroCmsPost[];
+  posts: NextApiPost[];
 };

@@ -1,11 +1,11 @@
 "use client";
 import { useParams } from "next/navigation";
 import { usePost } from "../_hooks/usePost";
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Detail() {
-  const { id } = useParams<{ id: string }>();
-  // console.log(id);
+  const params = useParams<{ id: string }>();
+  const id = Number(params.id);
   const { post, isLoading, error } = usePost(id);
   console.log(post);
   if (isLoading) {
@@ -16,16 +16,25 @@ export default function Detail() {
     console.log(error);
     return <p>記事が見つかりませんでした</p>;
   }
-  console.log(post.thumbnail.url);
+  console.log(post.thumbnailUrl);
   return (
     <div className="mx-auto my-10 max-w-[800px] px-4">
       <div className="flex flex-col p-4">
         <div className="mb-4">
-          <Image
-            src={post.thumbnail.url}
+          {/* <Image
+            src={post.thumbnailUrl}
             alt=""
-            width={post.thumbnail.width}
-            height={post.thumbnail.height}
+            width={157}
+            height={116}
+            className="w-full h-auto"
+          /> */}
+          {/* 画像をPOSTするのが大変なのでImageでなくimgを使用 警告されるため以下を入れてESLint無効化*/}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.thumbnailUrl}
+            alt=""
+            width={157}
+            height={116}
             className="w-full h-auto"
           />
         </div>
@@ -36,12 +45,12 @@ export default function Detail() {
               {new Date(post.createdAt).toLocaleDateString("ja-JP")}
             </div>
             <div className="flex">
-              {post.categories.map((categories, id) => (
+              {post.postCategories.map((postCategory, id) => (
                 <div
                   key={id}
                   className="border border-blue-600 rounded text-blue-600 text-sm mr-2 px-2 py-0.5"
                 >
-                  {categories.name}
+                  {postCategory.category.name}
                 </div>
               ))}
             </div>

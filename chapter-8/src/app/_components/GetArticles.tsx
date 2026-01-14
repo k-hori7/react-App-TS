@@ -1,20 +1,20 @@
 "use client";
-import PostCard from "./PostCard";
 import { usePosts } from "../_hooks/usePosts";
 import { NextApiPost } from "../_types/typePost";
+import GetArticle from "./GetArticle";
 
-export default function PostCardList() {
+export default function GetArticles() {
   const { posts, isLoading } = usePosts();
-
   if (isLoading) {
     return <p>読み込み中....</p>;
   }
-  // console.log(posts);
   return (
     <>
-      {posts.map((post: NextApiPost) => (
-        <PostCard post={post} key={post.id} />
-      ))}
+      <div className="py-4 px-6">
+        {posts.map((post: NextApiPost) => (
+          <GetArticle post={post} key={post.id} />
+        ))}
+      </div>
     </>
   );
 }
