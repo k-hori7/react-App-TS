@@ -7,7 +7,7 @@ export default function Detail() {
   const params = useParams<{ id: string }>();
   const id = Number(params.id);
   const { post, isLoading, error } = usePost(id);
-  console.log(post);
+  // console.log(post);
   if (isLoading) {
     return <p>読み込み中....</p>;
   }
