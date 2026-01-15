@@ -1,12 +1,12 @@
-import PostArticle from "@/app/_components/PostArticle";
+import PostCategory from "@/app/_components/PostCategory";
 import Title from "@/app/_components/Title";
 export default function Home() {
-  const title = "記事作成";
+  const title = "カテゴリー作成";
 
   return (
     <>
       <Title title={title} />
-      <PostArticle />
+      <PostCategory />
     </>
   );
 }

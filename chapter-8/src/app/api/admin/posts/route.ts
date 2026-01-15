@@ -47,7 +47,7 @@ export const GET = async () => {
   }
 };
 
-//管理者_記事新規作成API
+//POST
 
 // 投稿作成時に送られてくるリクエストのbodyの型
 export type CreatePostRequestBody = {

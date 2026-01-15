@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import type { DataPost } from "../_types/type";
+import { DataPost } from "../_types/typePost";
 
 export default function PostCard({ post }: DataPost) {
   return (

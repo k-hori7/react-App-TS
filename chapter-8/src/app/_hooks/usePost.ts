@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { NextApiPost } from "../_types/typePost";
-import { DataPost } from "../_types/type";
+import { DataPost } from "../_types/typePost";
 
 export function usePost(id: number | undefined) {
   const [post, setPost] = useState<NextApiPost | null>(null);

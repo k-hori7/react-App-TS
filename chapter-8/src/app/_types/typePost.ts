@@ -28,3 +28,9 @@ export interface NextApiPost {
   updatedAt: string;
   postCategories: PostCategory[];
 }
+export type DataPost = {
+  post: NextApiPost;
+};
+export type DataPosts = {
+  posts: NextApiPost[];
+};

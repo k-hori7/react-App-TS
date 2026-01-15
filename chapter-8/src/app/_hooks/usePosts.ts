@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { DataPosts } from "../_types/type";
+import { DataPosts } from "../_types/typePost";
 import { NextApiPost } from "../_types/typePost";
 
 export function usePosts() {
