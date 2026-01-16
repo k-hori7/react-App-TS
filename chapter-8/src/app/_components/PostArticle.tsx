@@ -74,9 +74,8 @@ export default function PostArticle() {
           />
 
           <p className="text-left font-medium mb-1">内容</p>
-          <input
+          <textarea
             className="w-full border rounded px-3 py-2 mb-4"
-            type="textarea"
             value={post.content}
             onChange={handleChange}
             name="content"
@@ -90,9 +89,12 @@ export default function PostArticle() {
             onChange={handleChange}
             name="thumbnailUrl"
           />
+
           {post.thumbnailUrl !== "" && (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={post.thumbnailUrl}
+              alt="Preview"
               className="w-40 h-24 object-cover rounded mb-2"
             />
           )}

@@ -10,7 +10,7 @@ export default function UpdateArticle() {
   const params = useParams<{ id: string }>();
   const id = Number(params.id);
   //取得用post
-  const { post: fetchedPost, isLoading, error } = usePost(id);
+  const { post: fetchedPost, isLoading } = usePost(id);
   const { categories: allCategories, isLoading: isCatLoading } =
     useCategories();
   //編集用post
@@ -90,7 +90,7 @@ export default function UpdateArticle() {
       if (response.ok) {
         alert("削除に成功しました");
         router.push("/admin/posts");
-        router.refresh;
+        router.refresh();
       } else {
         alert("削除に失敗しました");
       }
@@ -133,8 +133,10 @@ export default function UpdateArticle() {
           />
           {/* Javascriptの論理積 &&の左がtrueの時右表示 */}
           {formData.thumbnailUrl !== "" && (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={formData.thumbnailUrl}
+              alt="Preview"
               className="w-40 h-24 object-cover rounded mb-2"
             />
           )}

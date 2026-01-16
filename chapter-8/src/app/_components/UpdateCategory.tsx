@@ -37,7 +37,7 @@ export default function UpdateCategory() {
       if (response.ok) {
         alert("削除に成功しました");
         router.push("/admin/categories");
-        router.refresh;
+        router.refresh();
       } else {
         alert("削除に失敗しました");
       }
