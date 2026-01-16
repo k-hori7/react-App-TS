@@ -34,25 +34,25 @@ export default function UpdateArticle() {
       });
     }
   }, [fetchedPost]);
-  //わかりにくい関数になった
+  //クリックした彼ゴリーがすでに選ばれているかどうかで追加か削除かを自動で切り替える
   const handleCheck = (catId: number, catName: string) => {
     setFormData((prev) => {
+      //someは配列の中に条件に合うものが一つでもあればtrue = 一つでも一致するIDのカテゴリーが元々クリックされていればtrue
       const isAlreadySelected = prev.categories.some((c) => c.id === catId);
-
       const newCategories = isAlreadySelected
         ? prev.categories.filter((c) => c.id !== catId) // 削除
         : [...prev.categories, { id: catId, name: catName }]; // 追加（名前も入れる）
-
       return { ...prev, categories: newCategories };
     });
   };
-
+  //現在の入力値を保持
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  //PUT
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -80,6 +80,7 @@ export default function UpdateArticle() {
       console.log("通信エラー", error);
     }
   };
+  //DELETE
   const handleDelete = async () => {
     if (!confirm("本当に削除しますか？")) return;
     try {
@@ -97,8 +98,10 @@ export default function UpdateArticle() {
       console.error("通信エラー：", error);
     }
   };
+
   if (isLoading || isCatLoading) return <p>読み込み中....</p>;
   if (!fetchedPost) return <p>記事が見つかりませんでした</p>;
+
   return (
     <div className="p-6">
       <div>
@@ -128,12 +131,14 @@ export default function UpdateArticle() {
             onChange={handleChange}
             name="thumbnailUrl"
           />
+          {/* Javascriptの論理積 &&の左がtrueの時右表示 */}
           {formData.thumbnailUrl !== "" && (
             <img
               src={formData.thumbnailUrl}
               className="w-40 h-24 object-cover rounded mb-2"
             />
           )}
+
           <p className="text-left font-medium mb-1">カテゴリー</p>
           <div className="flex flex-wrap gap-2 mb-6">
             {/*  allCategories(全選択肢)を回す */}
@@ -161,6 +166,7 @@ export default function UpdateArticle() {
               );
             })}
           </div>
+
           <button className="bg-blue-600 text-white font-bold rounded py-1 px-5 hover:bg-blue-700 transition-colors">
             更新
           </button>
