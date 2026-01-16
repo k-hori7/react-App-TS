@@ -1,4 +1,4 @@
-import GetCategories from "@/app/_components/GetCategories";
+import CategoryList from "@/app/admin/categories/_components/CategoryList";
 import Title from "@/app/_components/Title";
 import Link from "next/link";
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
           新規作成
         </Link>
       </div>
-      <GetCategories />
+      <CategoryList />
     </>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
-import GetCategory from "./GetCategory";
-import { useCategories } from "../_hooks/useCategories";
+import CategoryItem from "./CategoryItem";
+import { useCategories } from "../../../_hooks/useCategories";
 
-export default function GetCategories() {
+export default function CategoryList() {
   const { categories, isLoading } = useCategories();
   if (isLoading) {
     return <p>読み込み中....</p>;
@@ -11,7 +11,7 @@ export default function GetCategories() {
     <>
       <div className="py-4 px-6">
         {categories.map((category) => (
-          <GetCategory category={category} key={category.id} />
+          <CategoryItem category={category} key={category.id} />
         ))}
       </div>
     </>

@@ -6,7 +6,7 @@ type Category = {
 type Props = {
   category: Category;
 };
-export default function GetCategory({ category }: Props) {
+export default function CategoryItem({ category }: Props) {
   return (
     <>
       <div className="py-2 border-b border-gray-300">
