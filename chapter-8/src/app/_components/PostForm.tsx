@@ -78,7 +78,6 @@ export default function PostForm({
               disabled={isPending}
             />
           </div>
-
           <div>
             <label className="block font-medium mb-2">内容</label>
             <textarea

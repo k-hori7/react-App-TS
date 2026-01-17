@@ -1,6 +1,6 @@
 "use client";
-import { usePosts } from "../_hooks/usePosts";
-import { NextApiPost } from "../_types/typePost";
+import { usePosts } from "@/app/_hooks/usePosts";
+import { NextApiPost } from "@/app/_types/typePost";
 import GetArticle from "./GetArticle";
 
 export default function GetArticles() {

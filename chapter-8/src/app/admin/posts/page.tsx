@@ -1,5 +1,5 @@
 import Link from "next/link";
-import GetArticles from "@/app/_components/GetArticles";
+import GetArticles from "./_components/GetArticles";
 import Title from "@/app/_components/Title";
 
 export default function Home() {

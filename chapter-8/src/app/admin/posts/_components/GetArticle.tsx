@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DataPost } from "../_types/typePost";
+import { DataPost } from "@/app/_types/typePost";
 
 export default function GetArticle({ post }: DataPost) {
   const date = new Date(post.updatedAt);
