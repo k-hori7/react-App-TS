@@ -56,7 +56,7 @@ export default function PostForm({
     e.preventDefault();
     setIsPending(true);
     try {
-      await onSubmit(formData); //エラー処理は？？
+      await onSubmit(formData);
     } finally {
       setIsPending(false);
     }

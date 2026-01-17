@@ -14,7 +14,6 @@ type PostData = {
 };
 export default function Home() {
   const title = "記事作成";
-
   const router = useRouter();
   const handleSubmit = async (data: PostData) => {
     const res = await fetch("/api/admin/posts", {
