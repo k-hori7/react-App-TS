@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import type { DataPost } from "../_types/type";
+import { DataPost } from "../_types/typePost";
 
 export default function PostCard({ post }: DataPost) {
   return (
@@ -11,12 +11,12 @@ export default function PostCard({ post }: DataPost) {
             {new Date(post.createdAt).toLocaleDateString("ja-JP")}
           </div>
           <div className="flex">
-            {post.categories.map((categories: { name: string; id: string }) => (
+            {post.postCategories.map((postCategory) => (
               <div
-                key={categories.id}
+                key={postCategory.category.id}
                 className="border border-blue-600 text-blue-600 rounded px-2 py-0.5 text-sm mr-2"
               >
-                {categories.name}
+                {postCategory.category.name}
               </div>
             ))}
           </div>
