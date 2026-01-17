@@ -1,9 +1,9 @@
 "use client";
 import { usePosts } from "@/app/_hooks/usePosts";
 import { NextApiPost } from "@/app/_types/typePost";
-import GetArticle from "./GetArticle";
+import ArticleItem from "./ArticleItem";
 
-export default function GetArticles() {
+export default function ArticleList() {
   const { posts, isLoading } = usePosts();
   if (isLoading) {
     return <p>読み込み中....</p>;
@@ -12,7 +12,7 @@ export default function GetArticles() {
     <>
       <div className="py-4 px-6">
         {posts.map((post: NextApiPost) => (
-          <GetArticle post={post} key={post.id} />
+          <ArticleItem post={post} key={post.id} />
         ))}
       </div>
     </>

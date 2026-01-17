@@ -1,6 +1,6 @@
 import Link from "next/link";
-import GetArticles from "./_components/GetArticles";
 import Title from "@/app/_components/Title";
+import ArticleList from "./_components/ArticleList";
 
 export default function Home() {
   const title = "記事一覧";
@@ -15,7 +15,7 @@ export default function Home() {
           新規作成
         </Link>
       </div>
-      <GetArticles />
+      <ArticleList />
     </>
   );
 }

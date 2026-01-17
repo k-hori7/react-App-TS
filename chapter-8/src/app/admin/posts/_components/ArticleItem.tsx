@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { DataPost } from "@/app/_types/typePost";
 
-export default function GetArticle({ post }: DataPost) {
+export default function ArticleItem({ post }: DataPost) {
   const date = new Date(post.updatedAt);
   return (
     <>
