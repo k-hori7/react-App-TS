@@ -12,7 +12,7 @@ export default function PostCardList() {
   // console.log(posts);
   return (
     <>
-      {posts.map((post: NextApiPost) => (
+      {posts?.map((post: NextApiPost) => (
         <PostCard post={post} key={post.id} />
       ))}
     </>

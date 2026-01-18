@@ -42,6 +42,12 @@ export const POST = async (request: Request) => {
     const body = await request.json();
     // bodyの中からnameを取り出す
     const { name }: CreateCategoryRequestBody = body;
+    if (!name || typeof name !== "string") {
+      return NextResponse.json(
+        { message: "name is required" },
+        { status: 422 }
+      );
+    }
     // カテゴリーをDBに生成
     const data = await prisma.category.create({
       data: {
@@ -54,7 +60,11 @@ export const POST = async (request: Request) => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 400 });
+      // return full stack for debugging (remove or limit in production)
+      return NextResponse.json(
+        { message: error.message, stack: error.stack },
+        { status: 400 }
+      );
     }
   }
 };
