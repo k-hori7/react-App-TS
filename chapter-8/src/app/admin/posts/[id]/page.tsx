@@ -4,6 +4,7 @@ import PostForm from "@/app/_components/PostForm";
 import { usePost } from "@/app/_hooks/usePost";
 import { useParams, useRouter } from "next/navigation";
 import { NextApiPost } from "@/app/_types/typePost";
+import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 type PostData = {
   title: string;
   content: string;
@@ -19,18 +20,27 @@ export default function Home() {
   const id = Number(params.id);
   const { post } = usePost(id);
   const router = useRouter();
+  const { token } = useSupabaseSession();
   const handleSubmit = async (data: PostData) => {
+    if (!token) return;
     await fetch(`/api/admin/posts/${id}`, {
       method: "PUT",
       body: JSON.stringify(data),
+      headers: {
+        Authorization: token,
+      },
     });
     router.push("/admin/posts");
     router.refresh();
   };
   const handleDelete = async () => {
+    if (!token) return;
     if (!confirm("削除しますか？")) return;
     await fetch(`/api/admin/posts/${id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: token,
+      },
     });
     router.push("/admin/posts");
     router.refresh();

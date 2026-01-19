@@ -1,6 +1,6 @@
 import { prisma } from "@/app/_libs/prisma";
 import { NextRequest, NextResponse } from "next/server";
-
+import { supabase } from "@/app/_libs/supabase";
 //GET
 
 export type CategoryShowResponse = {
@@ -17,7 +17,10 @@ export const GET = async (
   { params }: { params: Promise<{ id: string }> }
 ) => {
   const { id } = await params;
-
+  const token = request.headers.get("Authorization") ?? "";
+  const { error } = await supabase.auth.getUser(token);
+  if (error)
+    return NextResponse.json({ status: error.message }, { status: 400 });
   try {
     const category = await prisma.category.findUnique({
       where: {
@@ -54,7 +57,10 @@ export const PUT = async (
 ) => {
   const { id } = await params;
   const { name }: UpdateCategoryRequestBody = await request.json();
-
+  const token = request.headers.get("Authorization") ?? "";
+  const { error } = await supabase.auth.getUser(token);
+  if (error)
+    return NextResponse.json({ status: error.message }, { status: 400 });
   try {
     // idを指定して、Categoryを更新
     await prisma.category.update({
@@ -80,6 +86,10 @@ export const DELETE = async (
   { params }: { params: Promise<{ id: string }> }
 ) => {
   const { id } = await params;
+  const token = request.headers.get("Authorization") ?? "";
+  const { error } = await supabase.auth.getUser(token);
+  if (error)
+    return NextResponse.json({ status: error.message }, { status: 400 });
 
   try {
     // idを指定して、Categoryを削除
