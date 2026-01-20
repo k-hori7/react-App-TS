@@ -1,41 +1,35 @@
 "use client";
 import { useParams } from "next/navigation";
 import { usePost } from "../_hooks/usePost";
-// import Image from "next/image";
-
+import Image from "next/image";
+import { supabase } from "../_libs/supabase";
 export default function Detail() {
   const params = useParams<{ id: string }>();
   const id = Number(params.id);
   const { post, isLoading, error } = usePost(id);
-  // console.log(post);
+
   if (isLoading) {
     return <p>読み込み中....</p>;
   }
-
   if (!post) {
     console.log(error);
     return <p>記事が見つかりませんでした</p>;
   }
-  console.log(post.thumbnailUrl);
+  const { data } = supabase.storage
+    .from("post_thumbnail")
+    .getPublicUrl(post.thumbnailImageKey || "");
+  const thumbnailImageUrl = data?.publicUrl ?? "";
   return (
     <div className="mx-auto my-10 max-w-[800px] px-4">
       <div className="flex flex-col p-4">
         <div className="mb-4">
-          {/* <Image
-            src={post.thumbnailUrl}
-            alt=""
-            width={157}
-            height={116}
-            className="w-full h-auto"
-          /> */}
-          {/* 画像をPOSTするのが大変なのでImageでなくimgを使用 警告されるため以下を入れてESLint無効化*/}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={post.thumbnailUrl}
-            alt=""
-            width={157}
-            height={116}
-            className="w-full h-auto"
+          <Image
+            src={thumbnailImageUrl}
+            alt="thumbnail"
+            width={800}
+            height={450}
+            priority
+            className="object-cover rounded-lg"
           />
         </div>
 

@@ -1,11 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCategories } from "../_hooks/useCategories";
 import CategoryBadge from "./CategoryBadge";
+import { v4 as uuidv4 } from "uuid";
+import { supabase } from "../_libs/supabase";
+import Image from "next/image";
+import { ChangeEvent } from "react";
 type PostData = {
   title: string;
   content: string;
-  thumbnailUrl: string;
+  thumbnailImageKey: string;
   categories: {
     id: number;
     name: string;
@@ -29,7 +33,7 @@ export default function PostForm({
     initialData || {
       title: "",
       content: "",
-      thumbnailUrl: "",
+      thumbnailImageKey: "",
       categories: [],
     }
   );
@@ -42,6 +46,54 @@ export default function PostForm({
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  //DB保存用
+  const [thumbnailImageKey, setThumbnailImageKey] = useState(
+    initialData?.thumbnailImageKey || ""
+  );
+  const handleImageChange = async (
+    event: ChangeEvent<HTMLInputElement>
+  ): Promise<void> => {
+    //ファイルがない時はreturn ファイル選択後キャンセルとかで中身がない時(null)など
+    if (!event.target.files || event.target.files.length == 0) {
+      return;
+    }
+    const file = event.target.files[0];
+    //uuidv4(): 重複しない「一意のID（例: 550e8400-e29b...）」を生成する関数
+    const filepath = `private/${uuidv4()}`;
+
+    //supabaseにアップロード
+    const { data, error } = await supabase.storage
+      .from("post_thumbnail")
+      .upload(filepath, file, {
+        //(保存先のパス、ファイル本体、オプション)
+        cacheControl: "3600", //ブラウザに3600秒キャッシュ
+        upsert: false, //名前が重複したら上書きするか
+      });
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    setThumbnailImageKey(data.path);
+    setFormData((prev) => ({ ...prev, thumbnailImageKey: data.path }));
+  };
+  //表示用
+  const [thumbnailImageUrl, setThumbnailImageUrl] = useState<null | string>(
+    null
+  );
+  useEffect(() => {
+    if (!thumbnailImageKey) return;
+
+    const fetcher = async () => {
+      const {
+        data: { publicUrl },
+      } = await supabase.storage
+        .from("post_thumbnail")
+        .getPublicUrl(thumbnailImageKey);
+      setThumbnailImageUrl(publicUrl);
+    };
+    fetcher();
+  }, [thumbnailImageKey]);
   //カテゴリークリック時にデータと一致させるためのトグル
   const handleCheck = (catId: number, catName: string) => {
     setFormData((prev) => {
@@ -90,21 +142,28 @@ export default function PostForm({
           </div>
 
           <div>
-            <label className="block font-medium mb-2">サムネイルURL</label>
+            <label
+              htmlFor="thumbnailImageKey"
+              className="block font-medium mb-2"
+            >
+              サムネイルURL
+            </label>
             <input
-              name="thumbnailUrl"
-              value={formData.thumbnailUrl}
+              type="file"
+              id="thumbnailImageKey"
               disabled={isPending}
-              onChange={handleChange}
+              onChange={handleImageChange}
               className="w-full border rounded px-3 py-2 mb-4"
             />
-            {formData.thumbnailUrl && (
+            {thumbnailImageUrl && (
               /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                src={formData.thumbnailUrl}
+              <Image
+                src={thumbnailImageUrl}
                 alt="Peview"
+                width={400}
+                height={400}
                 className="w-40 h-24 object-cover rounded mb-2"
-              ></img>
+              />
             )}
           </div>
           <div>
@@ -132,7 +191,9 @@ export default function PostForm({
             </button>
             {onDelete && (
               <button
+                type="button"
                 disabled={isPending}
+                onClick={onDelete}
                 className="bg-red-600 text-white font-bold py-2 px-6 rounded hover:bg-red-700 "
               >
                 削除

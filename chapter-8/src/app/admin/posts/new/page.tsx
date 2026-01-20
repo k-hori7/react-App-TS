@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 type PostData = {
   title: string;
   content: string;
-  thumbnailUrl: string;
+  thumbnailImageKey: string;
   categories: {
     id: number;
     name: string;

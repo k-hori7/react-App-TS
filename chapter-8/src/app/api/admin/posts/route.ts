@@ -8,7 +8,7 @@ export type PostIndexResponse = {
     id: number;
     title: string;
     content: string;
-    thumbnailUrl: string;
+    thumbnailImageKey: string;
     createdAt: Date;
     updatedAt: Date;
     postCategories: {
@@ -58,7 +58,7 @@ export type CreatePostRequestBody = {
   title: string;
   content: string;
   categories: { id: number }[];
-  thumbnailUrl: string;
+  thumbnailImageKey: string;
 };
 
 // 投稿作成APIのレスポンスの型
@@ -73,12 +73,12 @@ export const POST = async (request: Request) => {
     return NextResponse.json({ status: error.message }, { status: 400 });
   try {
     const body: CreatePostRequestBody = await request.json();
-    const { title, content, categories, thumbnailUrl } = body;
+    const { title, content, categories, thumbnailImageKey } = body;
     const data = await prisma.post.create({
       data: {
         title,
         content,
-        thumbnailUrl,
+        thumbnailImageKey,
       },
     });
     // 本来複数同時生成には、createManyというメソッドがあるが、sqliteではcreateManyが使えないので、for文1つずつ実施

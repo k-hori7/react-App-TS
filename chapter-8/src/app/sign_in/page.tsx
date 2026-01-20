@@ -30,7 +30,7 @@ export default function Page() {
 
   return (
     <div className="flex justify-center pt-60">
-      <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-100">
+      <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md">
         <div>
           <label
             htmlFor="email"

@@ -8,7 +8,7 @@ import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 type PostData = {
   title: string;
   content: string;
-  thumbnailUrl: string;
+  thumbnailImageKey: string;
   categories: {
     id: number;
     name: string;
@@ -49,7 +49,7 @@ export default function Home() {
     return {
       title: post.title,
       content: post.content,
-      thumbnailUrl: post.thumbnailUrl,
+      thumbnailImageKey: post.thumbnailImageKey,
       // postCategories(入れ子) を categories(フラットな配列) に変換
       categories: post.postCategories.map((pc) => ({
         id: pc.category.id,

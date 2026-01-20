@@ -15,7 +15,7 @@ export type PostShowResponse = {
     id: number;
     title: string;
     content: string;
-    thumbnailUrl: string;
+    thumbnailImageKey: string;
     createdAt: Date;
     updatedAt: Date;
     postCategories: {
@@ -71,7 +71,7 @@ export type UpdatePostRequestBody = {
   title: string;
   content: string;
   categories: { id: number }[];
-  thumbnailUrl: string;
+  thumbnailImageKey: string;
 };
 
 export const PUT = async (
@@ -83,8 +83,12 @@ export const PUT = async (
   if (error)
     return NextResponse.json({ status: error.message }, { status: 400 });
   const { id } = await params;
-  const { title, content, categories, thumbnailUrl }: UpdatePostRequestBody =
-    await request.json();
+  const {
+    title,
+    content,
+    categories,
+    thumbnailImageKey,
+  }: UpdatePostRequestBody = await request.json();
 
   try {
     const post = await prisma.post.update({
@@ -94,7 +98,7 @@ export const PUT = async (
       data: {
         title,
         content,
-        thumbnailUrl,
+        thumbnailImageKey,
       },
     });
     await prisma.postCategory.deleteMany({
