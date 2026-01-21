@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { supabase } from "../_libs/supabase";
 import Image from "next/image";
 import { ChangeEvent } from "react";
+import { useForm } from "react-hook-form";
 type PostData = {
   title: string;
   content: string;
@@ -29,27 +30,25 @@ export default function PostForm({
   onDelete,
   submitButtonText,
 }: Props) {
-  const [formData, setFormData] = useState<PostData>(
-    initialData || {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { isSubmitting },
+  } = useForm({
+    defaultValues: initialData || {
       title: "",
       content: "",
       thumbnailImageKey: "",
       categories: [],
-    }
-  );
-  const [isPending, setIsPending] = useState<boolean>(false); //送信中かどうか
+    },
+  });
   const { categories: allCategories, isLoading } = useCategories(); //カテゴリー全種
-  //汎用的に使える入力値とデータを同一にする関数
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-  //DB保存用
-  const [thumbnailImageKey, setThumbnailImageKey] = useState(
-    initialData?.thumbnailImageKey || ""
-  );
+
+  const thumbnailImageKey = watch("thumbnailImageKey"); //リアルタイム監視
+  const selectedCategories = watch("categories");
+
   const handleImageChange = async (
     event: ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
@@ -74,8 +73,7 @@ export default function PostForm({
       return;
     }
 
-    setThumbnailImageKey(data.path);
-    setFormData((prev) => ({ ...prev, thumbnailImageKey: data.path }));
+    setValue("thumbnailImageKey", data.path);
   };
   //表示用
   const [thumbnailImageUrl, setThumbnailImageUrl] = useState<null | string>(
@@ -96,48 +94,33 @@ export default function PostForm({
   }, [thumbnailImageKey]);
   //カテゴリークリック時にデータと一致させるためのトグル
   const handleCheck = (catId: number, catName: string) => {
-    setFormData((prev) => {
-      const isSelected = prev.categories.some((c) => c.id === catId);
-      const newCategories = isSelected
-        ? prev.categories.filter((c) => c.id !== catId)
-        : [...prev.categories, { id: catId, name: catName }];
-      return { ...prev, categories: newCategories };
-    });
-  };
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsPending(true);
-    try {
-      await onSubmit(formData);
-    } finally {
-      setIsPending(false);
-    }
+    const isSelected = selectedCategories.some((c) => c.id === catId);
+    const newCategories = isSelected
+      ? selectedCategories.filter((c) => c.id !== catId) //clickしたID以外のものだけ残す
+      : [...selectedCategories, { id: catId, name: catName }];
+    setValue("categories", newCategories);
   };
   if (isLoading) return <p>読み込み中</p>;
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="px-7">
           <div>
             <label className="block font-medium mb-2">タイトル</label>
             <input
               type="text"
-              name="title"
               className="w-full border rounded px-3 py-2 mb-4"
-              value={formData.title}
-              onChange={handleChange}
-              disabled={isPending}
+              disabled={isSubmitting}
+              {...register("title")}
             />
           </div>
           <div>
             <label className="block font-medium mb-2">内容</label>
             <textarea
-              name="content"
-              value={formData.content}
-              disabled={isPending}
-              onChange={handleChange}
+              disabled={isSubmitting}
               className="w-full border rounded px-3 py-2 mb-4"
+              {...register("content")}
             ></textarea>
           </div>
 
@@ -151,7 +134,7 @@ export default function PostForm({
             <input
               type="file"
               id="thumbnailImageKey"
-              disabled={isPending}
+              disabled={isSubmitting}
               onChange={handleImageChange}
               className="w-full border rounded px-3 py-2 mb-4"
             />
@@ -173,18 +156,18 @@ export default function PostForm({
                 <CategoryBadge
                   key={category.id}
                   name={category.name}
-                  isSelected={formData.categories.some(
+                  isSelected={selectedCategories.some(
                     (c) => c.id === category.id
                   )}
                   onToggle={() => handleCheck(category.id, category.name)}
-                  disabled={isPending}
+                  disabled={isSubmitting}
                 />
               ))}
             </div>
           </div>
           <div className="pt-4">
             <button
-              disabled={isPending}
+              disabled={isSubmitting}
               className=" text-white font-bold py-2 px-6 rounded bg-blue-500 hover:bg-blue-600 "
             >
               {submitButtonText}
@@ -192,7 +175,7 @@ export default function PostForm({
             {onDelete && (
               <button
                 type="button"
-                disabled={isPending}
+                disabled={isSubmitting}
                 onClick={onDelete}
                 className="bg-red-600 text-white font-bold py-2 px-6 rounded hover:bg-red-700 "
               >
