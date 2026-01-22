@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 export type DataContact = {
   name: string;

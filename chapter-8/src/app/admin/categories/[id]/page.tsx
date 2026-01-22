@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter();
   const categoryId = Number(Params.id);
   const { categories } = useCategories();
-  const category = categories.find((category) => category.id === categoryId);
+  const category = categories?.find((category) => category.id === categoryId);
   const { token } = useSupabaseSession();
 
   const handleSubmit = async (categoryName: string) => {
