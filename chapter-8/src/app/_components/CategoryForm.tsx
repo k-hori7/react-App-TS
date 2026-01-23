@@ -19,7 +19,9 @@ export default function CategoryForm({
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<categoryData>();
+  } = useForm<categoryData>(
+    initialData ? { defaultValues: { categoryName: initialData } } : {}
+  );
   const onProcess = async (data: categoryData) => {
     await onSubmit(data.categoryName);
   };

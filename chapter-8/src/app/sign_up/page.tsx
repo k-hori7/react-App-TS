@@ -1,7 +1,5 @@
 "use client";
-
 import { supabase } from "@/app/_libs/supabase";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type LoginFormValue = {

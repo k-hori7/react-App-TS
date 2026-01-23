@@ -38,7 +38,7 @@ export default function Contact() {
       alert("送信しました");
       reset();
     } catch (err: unknown) {
-      alert("失敗しました");
+      alert(`失敗しました Error:${err}`);
     }
   };
 

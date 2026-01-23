@@ -1,16 +1,7 @@
 import { DataPosts } from "../_types/typePost";
-import useSWR from "swr";
-
-const fetcher = async (url: string) => {
-  const res: Response = await fetch(url);
-  if (!res.ok) {
-    throw new Error("Network error");
-  }
-  const data: DataPosts = await res.json();
-  return data;
-};
+import { useFetch } from "./useFetch";
 
 export function usePosts() {
-  const { data, error, isLoading } = useSWR<DataPosts>(`/api/posts`, fetcher);
+  const { data, error, isLoading } = useFetch<DataPosts>(`/api/posts`);
   return { posts: data?.posts, error, isLoading };
 }
