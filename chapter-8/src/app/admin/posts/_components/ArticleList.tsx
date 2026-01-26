@@ -11,7 +11,7 @@ export default function ArticleList() {
   return (
     <>
       <div className="py-4 px-6">
-        {posts.map((post: NextApiPost) => (
+        {posts?.map((post: NextApiPost) => (
           <ArticleItem post={post} key={post.id} />
         ))}
       </div>

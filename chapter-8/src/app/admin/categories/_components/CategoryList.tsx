@@ -10,7 +10,7 @@ export default function CategoryList() {
   return (
     <>
       <div className="py-4 px-6">
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <CategoryItem category={category} key={category.id} />
         ))}
       </div>

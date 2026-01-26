@@ -1,6 +1,6 @@
 import { prisma } from "@/app/_libs/prisma";
-import { NextResponse } from "next/server";
-
+import { NextRequest, NextResponse } from "next/server";
+import { supabase } from "@/app/_libs/supabase";
 //GET
 export type CategoriesIndexResponse = {
   categories: {
@@ -11,7 +11,11 @@ export type CategoriesIndexResponse = {
   }[];
 };
 
-export const GET = async () => {
+export const GET = async (request: NextRequest) => {
+  const token = request.headers.get("Authorization") ?? "";
+  const { error } = await supabase.auth.getUser(token);
+  if (error)
+    return NextResponse.json({ status: error.message }, { status: 400 });
   try {
     const categories = await prisma.category.findMany({
       orderBy: {
@@ -38,10 +42,19 @@ export type CreateCategoryResponse = {
 };
 
 export const POST = async (request: Request) => {
+  const token = request.headers.get("Authorization") ?? "";
+  const { error } = await supabase.auth.getUser(token);
+  if (error)
+    return NextResponse.json({ status: error.message }, { status: 400 });
   try {
     const body = await request.json();
-    // bodyの中からnameを取り出す
     const { name }: CreateCategoryRequestBody = body;
+    if (!name || typeof name !== "string") {
+      return NextResponse.json(
+        { message: "name is required" },
+        { status: 422 }
+      );
+    }
     // カテゴリーをDBに生成
     const data = await prisma.category.create({
       data: {
@@ -54,7 +67,10 @@ export const POST = async (request: Request) => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 400 });
+      return NextResponse.json(
+        { message: error.message, stack: error.stack },
+        { status: 400 }
+      );
     }
   }
 };

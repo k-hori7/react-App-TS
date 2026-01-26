@@ -11,7 +11,7 @@ export interface NextApiPost {
   id: number;
   title: string;
   content: string;
-  thumbnailUrl: string;
+  thumbnailImageKey: string;
   createdAt: string; // API(JSON)から来る日付は文字列
   updatedAt: string;
   postCategories: PostCategory[];

@@ -4,9 +4,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "placehold.jp",
+        hostname: "bubmqrhqptqkgttcgpkk.supabase.co",
         port: "",
-        pathname: "/**",
+        pathname: "/storage/v1/object/public/**",
       },
       { protocol: "https", hostname: "images.microcms-assets.io" }, // これを追加
     ],
